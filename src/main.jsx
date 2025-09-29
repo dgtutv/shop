@@ -5,6 +5,7 @@ import App from './App.jsx'
 import { createBrowserRouter, RouterProvider } from "react-router";
 import Shop from './pages/Shop.jsx'
 import CartPage from './pages/Cart.jsx'
+import Header from './layouts/Header.jsx';
 
 const router = createBrowserRouter([
   {
@@ -21,10 +22,25 @@ const router = createBrowserRouter([
   },
 ]);
 
-//Header and footer should go in here, around the router
+const contentStyle = {
+  flex: 1,
+}
+
+const mainStyle = {
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "space-between",
+  alignItems: "center",
+  minHeight: "100vh",
+}
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <div style={mainStyle}>
+      <Header/>
+      <div style={contentStyle}>
+        <RouterProvider router={router} />
+      </div>
+    </div>
   </StrictMode>
 );
