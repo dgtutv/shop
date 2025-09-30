@@ -10,8 +10,9 @@ const Header = () => {
         alignItems: "center",
         padding: "1rem 2rem",
         backgroundColor: "#181818ff",
-        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.86).1)",
+        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.86)",
         width: "100%",
+        margin: "0"
     }
 
     const navStyle = {
