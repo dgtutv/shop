@@ -14,6 +14,7 @@ const Header = () => {
     const [backgroundColor, setBackgroundColor] = useState("");
     const headerRef = useRef(null);
 
+    //Used for matching drawer color to header color (works alongside dark theme)
     const updateBackgroundColor = () => {
         if(headerRef.current){
             const element = headerRef.current;
@@ -55,6 +56,8 @@ const Header = () => {
         }
     }, [isMobile]);
 
+
+    //MUI element stylings
     const hamburgerMenuStyle = {
         zIndex: 1300,
         color: "white",
