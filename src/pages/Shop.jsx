@@ -37,6 +37,14 @@ const Shop = () => {
         })
     })
 
+    //id = index-1
+    function addToCart(product){
+        setCart([...cart, product]);
+        const updatedProductCount = productCounts[product.id-1]++;
+        setProductCounts(updatedProductCount);
+        setNumItems(numItems+1);
+    }
+
     return (
         <div>
             <h1>Shop Page</h1>
