@@ -9,8 +9,9 @@ const Header = () => {
         justifyContent: "space-between",
         alignItems: "center",
         padding: "1rem 2rem",
-        backgroundColor: "#ffffff",
-        boxShadow: "0 2px 4px rgba(0,0,0,0.1)",
+        backgroundColor: "#181818ff",
+        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.86).1)",
+        width: "100%",
     }
 
     const navStyle = {
@@ -21,24 +22,39 @@ const Header = () => {
 
     const linkStyle = {
         textDecoration: "none",
-        color: "#6b7280",
+        color: "#e4e4e4",
         fontWeight: "500",
         padding: "0.5rem 1rem",
-        borderRadius: "0.375rem",
+        borderRadius: "2px",
         transition: "all 0.2s ease-in-out"
     }
 
     const activeLinkStyle = {
         ...linkStyle,
-        color: "#2563eb",
-        backgroundColor: "#eff6ff",
-        fontWeight: "600"
+        backgroundColor: "#202020ff",
+        fontWeight: "600",
+        borderBottom: "2px solid yellow",
+        color: "yellow"
+    }
+
+    const titleStyle = {
+        margin: 0, 
+        fontSize: "1.5rem"
     }
 
     return (
         <header style={headerStyle}>
-            <h1 style={{ margin: 0, color: "#1f2937", fontSize: "1.5rem" }}>
-                Shop - Current: {location.pathname}
+            <h1 style={titleStyle}>
+                {(() => {
+                    switch (location.pathname) {
+                        case "/shop":
+                            return "Shop";
+                        case "/cart":
+                            return "Cart";
+                        default:
+                            return "Home";
+                    }
+                })()}
             </h1>
             <nav style={navStyle}>
                 <NavLink 
@@ -65,3 +81,7 @@ const Header = () => {
 };
 
 export default Header;
+
+
+
+
