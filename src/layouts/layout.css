@@ -48,4 +48,28 @@ h1 {
     font-size: 1.5rem
 }
 
-@media screen and (max-width: "450px") {}
+@media (prefers-color-scheme: light) {
+    header {
+        background-color: #d4d4d4;
+        box-shadow: 0 4px 6px rgba(117, 117, 117, 0.86);
+    }
+
+    .activeLinkStyle {
+        background-color: rgb(58, 120, 255);
+        border: none;
+        color: white;
+    }
+
+    .linkStyle {
+        color: inherit;
+    }
+
+    .linkStyle:hover {
+        color: white;
+        background-color: rgb(104, 151, 253);
+    }
+
+    .activeLinkStyle:hover {
+        color: white;
+    }
+}
