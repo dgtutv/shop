@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+/* eslint-disable react-refresh/only-export-components */
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
 const ThemeContext = createContext();
 
@@ -48,7 +49,7 @@ export const ThemeProvider = ({ children }) => {
   }, []);
 
   // Get computed CSS variables
-  const getThemeColors = () => {
+  const getThemeColors = useCallback(() => {
     const root = document.documentElement;
     const computedStyle = getComputedStyle(root);
     
@@ -60,7 +61,7 @@ export const ThemeProvider = ({ children }) => {
       linkColor: computedStyle.getPropertyValue('--link-color').trim() || '#646cff',
       linkHover: computedStyle.getPropertyValue('--link-hover').trim() || (isDarkMode ? '#535bf2' : '#747bff'),
     };
-  };
+  }, [isDarkMode]);
 
   const value = {
     isDarkMode,

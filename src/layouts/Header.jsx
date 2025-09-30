@@ -8,7 +8,7 @@ import { useTheme } from '../contexts/ThemeContext.jsx';
 
 const Header = () => {
     const location = useLocation();
-    const { isDarkMode, isMobile, getThemeColors } = useTheme();
+    const { isMobile, getThemeColors } = useTheme();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
     const themeColors = getThemeColors();
