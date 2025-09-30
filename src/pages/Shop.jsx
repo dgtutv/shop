@@ -45,6 +45,14 @@ const Shop = () => {
         setNumItems(numItems+1);
     }
 
+    function removeFromCart(product){
+        const updatedCart = cart.splice(cart.findLastIndex(product), 1);
+        setCart(updatedCart);
+        const updatedProductCount = productCounts[product.id-1]--;
+        setProductCounts(updatedProductCount);
+        setNumItems(numItems-1);
+    }
+
     return (
         <div>
             <h1>Shop Page</h1>
