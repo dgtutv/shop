@@ -6,6 +6,10 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import Shop from './pages/Shop.jsx'
 import CartPage from './pages/Cart.jsx'
 import Header from './layouts/Header.jsx';
+//Link props
+//CurrentLink prop
+//Pass down to header
+//Link class wth active property, URL, etc
 
 const router = createBrowserRouter([
   {
