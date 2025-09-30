@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import "./layout.css"
 import { useState } from 'react';
@@ -11,7 +11,17 @@ const Header = () => {
     const location = useLocation();
     const [isMobile, setIsMobile] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [backgroundColor, setBackgroundColor] = useState("");
 
+    const headerRef = useRef(null);
+    useEffect(() => {
+        if(headerRef.current){
+            const element = headerRef.current;
+            const computedStyle = window.getComputedStyle(element);
+            const backgroundColor = computedStyle.getPropertyValue("background-color");
+            setBackgroundColor(backgroundColor)
+        }
+    }, [])
     
     useEffect(() => {
         const handleResize = () => {
@@ -34,7 +44,7 @@ const Header = () => {
             width: "320px",
             maxWidth: "50vw",
             padding: "16px",
-            backgroundColor: "#181818ff",
+            backgroundColor: backgroundColor,
             borderRight: "1px solid #e0e0e0",
         },
     }
@@ -46,7 +56,7 @@ const Header = () => {
     return (
         <>
         {isMobile ? (
-            <header>
+            <header ref={headerRef}>
                 <Drawer
                     anchor="left"
                     open={isMobile && mobileMenuOpen}
