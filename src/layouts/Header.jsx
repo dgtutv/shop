@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { NavLink, useLocation } from 'react-router';
+import { NavLink, useLocation } from 'react-router-dom';
 import "./layout.css"
 import { useState } from 'react';
 import { Box, IconButton, Drawer } from "@mui/material";
@@ -25,24 +25,16 @@ const Header = () => {
     }, []);
 
     const hamburgerMenuStyle = {
-        position: "fixed",
-        top: "16px",
-        left: "16px",
         zIndex: 1300,
-        backgroundColor: "#1976d2",
         color: "white",
-        boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.25)",
-        "&:hover": {
-            backgroundColor: "#1565c0",
-        },
     }
 
     const drawerStyle = {
         "& .MuiDrawer-paper": {
             width: "320px",
-            maxWidth: "85vw",
+            maxWidth: "50vw",
             padding: "16px",
-            backgroundColor: "#f8f9fa",
+            backgroundColor: "#181818ff",
             borderRight: "1px solid #e0e0e0",
         },
     }
@@ -55,13 +47,6 @@ const Header = () => {
         <>
         {isMobile ? (
             <header>
-                <IconButton
-                    sx={hamburgerMenuStyle}
-                    onClick={toggleMobileMenu}
-                    aria-label="open menu"
-                >
-                    <MenuIcon />
-                </IconButton>
                 <Drawer
                     anchor="left"
                     open={isMobile && mobileMenuOpen}
@@ -71,18 +56,21 @@ const Header = () => {
                     <NavLink 
                         to="/" 
                         className={({ isActive }) => isActive ? "activeLinkStyle" : "linkStyle"}
+                        onClick={toggleMobileMenu}
                     >
                         Home
                     </NavLink>
                     <NavLink 
                         to="/shop" 
                         className={({ isActive }) => isActive ? "activeLinkStyle" : "linkStyle"}
+                        onClick={toggleMobileMenu}
                     >
                         Shop
                     </NavLink>
                     <NavLink 
                         to="/cart" 
                         className={({ isActive }) => isActive ? "activeLinkStyle" : "linkStyle"}
+                        onClick={toggleMobileMenu}
                     >
                         Cart
                     </NavLink>
@@ -99,6 +87,13 @@ const Header = () => {
                         }
                     })()}
                 </h1>
+                <IconButton
+                    sx={hamburgerMenuStyle}
+                    onClick={toggleMobileMenu}
+                    aria-label="open menu"
+                >
+                    <MenuIcon />
+                </IconButton>
             </header>
             
         ) : (
@@ -118,19 +113,22 @@ const Header = () => {
                 <nav>
                     <NavLink 
                         to="/" 
-                        className={({ isActive }) => isActive ? "activeLinkStyle" : "linkStyle"}
+                        className={({ isActive }) => isActive ? "activeLinkStyle" : "linkStyle"
+                    }
                     >
                         Home
                     </NavLink>
                     <NavLink 
                         to="/shop" 
-                        className={({ isActive }) => isActive ? "activeLinkStyle" : "linkStyle"}
+                        className={({ isActive }) => isActive ? "activeLinkStyle" : "linkStyle"
+                    }
                     >
                         Shop
                     </NavLink>
                     <NavLink 
                         to="/cart" 
-                        className={({ isActive }) => isActive ? "activeLinkStyle" : "linkStyle"}
+                        className={({ isActive }) => isActive ? "activeLinkStyle" : "linkStyle"
+                    }
                     >
                         Cart
                     </NavLink>
