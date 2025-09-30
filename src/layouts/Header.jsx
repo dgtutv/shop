@@ -1,66 +1,22 @@
-import React, { useEffect, useRef } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import React, { useState } from 'react';
+import { NavLink, useLocation } from 'react-router';
 import "./layout.css"
-import { useState } from 'react';
 import { Box, IconButton, Drawer } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-
+import { useTheme } from '../contexts/ThemeContext.jsx';
 
 const Header = () => {
     const location = useLocation();
-    const [isMobile, setIsMobile] = useState(false);
+    const { isDarkMode, isMobile, getThemeColors } = useTheme();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    const [backgroundColor, setBackgroundColor] = useState("");
-    const headerRef = useRef(null);
 
-    //Used for matching drawer color to header color (works alongside dark theme)
-    const updateBackgroundColor = () => {
-        if(headerRef.current){
-            const element = headerRef.current;
-            const computedStyle = window.getComputedStyle(element);
-            const backgroundColor = computedStyle.getPropertyValue("background-color");
-            console.log("Updated background color:", backgroundColor);
-            setBackgroundColor(backgroundColor);
-        }
-    };
-
-    //Dark theme toggle
-    useEffect(() => {
-        updateBackgroundColor();
-        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        const handleThemeChange = () => {
-            setTimeout(updateBackgroundColor, 0);
-        };
-        mediaQuery.addEventListener('change', handleThemeChange);
-        return () => {
-            mediaQuery.removeEventListener('change', handleThemeChange);
-        };
-    }, [])
-    
-    //Mobile toggle
-    useEffect(() => {
-        const handleResize = () => {
-            setIsMobile(window.innerWidth < 450);
-        };
-        handleResize();
-        window.addEventListener('resize', handleResize);
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
-
-    useEffect(() => {
-        if (isMobile) {
-            setTimeout(updateBackgroundColor, 100);
-        }
-    }, [isMobile]);
-
+    const themeColors = getThemeColors();
 
     //MUI element stylings
     const hamburgerMenuStyle = {
         zIndex: 1300,
-        color: "white",
+        color: themeColors.textColor,
     }
 
     const drawerStyle = {
@@ -68,8 +24,9 @@ const Header = () => {
             width: "320px",
             maxWidth: "50vw",
             padding: "16px",
-            backgroundColor: backgroundColor,
-            borderRight: "1px solid #e0e0e0",
+            backgroundColor: themeColors.headerBg,
+            borderRight: `1px solid ${themeColors.borderColor}`,
+            color: themeColors.textColor,
         },
     }
     
@@ -80,7 +37,7 @@ const Header = () => {
     return (
         <>
         {isMobile ? (
-            <header ref={headerRef}>
+            <header>
                 <Drawer
                     anchor="left"
                     open={mobileMenuOpen}
