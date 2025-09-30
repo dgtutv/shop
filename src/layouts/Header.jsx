@@ -12,17 +12,32 @@ const Header = () => {
     const [isMobile, setIsMobile] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const [backgroundColor, setBackgroundColor] = useState("");
-
     const headerRef = useRef(null);
-    useEffect(() => {
+
+    const updateBackgroundColor = () => {
         if(headerRef.current){
             const element = headerRef.current;
             const computedStyle = window.getComputedStyle(element);
             const backgroundColor = computedStyle.getPropertyValue("background-color");
-            setBackgroundColor(backgroundColor)
+            console.log("Updated background color:", backgroundColor);
+            setBackgroundColor(backgroundColor);
         }
+    };
+
+    //Dark theme toggle
+    useEffect(() => {
+        updateBackgroundColor();
+        const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+        const handleThemeChange = () => {
+            setTimeout(updateBackgroundColor, 0);
+        };
+        mediaQuery.addEventListener('change', handleThemeChange);
+        return () => {
+            mediaQuery.removeEventListener('change', handleThemeChange);
+        };
     }, [])
     
+    //Mobile toggle
     useEffect(() => {
         const handleResize = () => {
             setIsMobile(window.innerWidth < 450);
@@ -33,6 +48,12 @@ const Header = () => {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
+
+    useEffect(() => {
+        if (isMobile) {
+            setTimeout(updateBackgroundColor, 100);
+        }
+    }, [isMobile]);
 
     const hamburgerMenuStyle = {
         zIndex: 1300,
@@ -59,7 +80,7 @@ const Header = () => {
             <header ref={headerRef}>
                 <Drawer
                     anchor="left"
-                    open={isMobile && mobileMenuOpen}
+                    open={mobileMenuOpen}
                     onClose={toggleMobileMenu}
                     sx={drawerStyle}
                 >
