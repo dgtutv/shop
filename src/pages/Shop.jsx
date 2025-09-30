@@ -1,6 +1,42 @@
-import React from 'react';
+import React, { use, useEffect, useState } from 'react';
 
 const Shop = () => {
+    const [products, setProducts] = useState([]);
+    const [productCounts, setProductCounts] = useState([])
+    const [loading, setLoading] = useState(true);
+    const [cart, setCart] = useState([]);
+    const [numItems, setNumItems] = useState(0);
+    const URL = 'https://fakestoreapi.com/products';
+
+    //Pull the products
+    useEffect(() => {
+        async function getProducts(){
+            try {
+                setLoading(true);
+                const response = await fetch(URL);
+                if(!response.ok){
+                    throw new Error("Incorrect URL or connection issue.");
+                }
+                const data = await response.json();
+                return data.data;
+            }
+            catch (error) {
+                console.error("Error:", error);
+                return [];
+            }
+            finally {
+                setLoading(false);
+            }
+        }
+
+        getProducts.then((products) => {
+            setProducts(products);
+            for(let i=0; i<products.length; i++){
+                setProductCounts([...products, 0])
+            }
+        })
+    })
+
     return (
         <div>
             <h1>Shop Page</h1>
