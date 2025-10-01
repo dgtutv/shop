@@ -4,7 +4,7 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  
+
   /* Dark mode variables */
   --text-color: rgba(255, 255, 255, 0.87);
   --bg-color: #242424;
@@ -14,7 +14,7 @@
   --link-hover: #535bf2;
   --card-bg: #1b1b1bff;
   --box-shadow: rgba(0, 0, 0, 0.86);
-  
+
   color: var(--text-color);
   background-color: var(--bg-color);
 
