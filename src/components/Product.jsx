@@ -18,13 +18,13 @@ const Product = ({product, callbackFn, productCount}) =>{
                 sx={{ objectFit: 'contain', padding: 1 }}
             />
             <CardContent>
-                <Typography gutterBottom variant="h6" component="div">
+                <Typography gutterBottom variant="h5" component="div">
                     {product.title}
                 </Typography>
-                <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 1 }}>
+                <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
                     ${product.price}
                 </Typography>
-                <Typography variant="body2">
+                <Typography variant="h8">
                     {product.description}
                 </Typography>
                 <Box style={{
@@ -33,7 +33,7 @@ const Product = ({product, callbackFn, productCount}) =>{
                     justifyContent: "space-between",
                     alignItems: "center",
                     borderRadius: "4px",
-                    marginTop: "6px"
+                    marginTop: "12px"
                 }}
                 >
                     <Button onClick={() => callbackFn(product, "remove")}><RemoveIcon style={{color: "white"}}/></Button>
