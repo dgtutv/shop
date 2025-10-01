@@ -1,6 +1,9 @@
 import Product from '../components/Product';
+import { useCart } from "../contexts/CartContext";
 
-const Shop = ({ products, productCounts, numItems, loading, addToCart, removeFromCart }) => {
+const Shop = () => {
+   const { products, productCounts, loading, addToCart, removeFromCart } = useCart();
+
    const handleCartChange = (product, action) => {
       if (action === 'add') {
          addToCart(product);
@@ -16,7 +19,6 @@ const Shop = ({ products, productCounts, numItems, loading, addToCart, removeFro
 
    return (
       <div>
-         <p>Items in cart: {numItems}</p>
          {products.length > 0 ? (
             <Product
                product={products[0]}
