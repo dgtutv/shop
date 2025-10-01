@@ -7,6 +7,7 @@ import Shop from './pages/Shop.jsx'
 import CartPage from './pages/Cart.jsx'
 import Layout from './layouts/Layout.jsx';
 import { ThemeProvider } from './contexts/ThemeProvider.jsx';
+import { CartProvider } from './contexts/CartProvider.jsx';
 
 const router = createBrowserRouter([
   {
@@ -32,7 +33,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ThemeProvider>
-      <RouterProvider router={router} />
+      <CartProvider>
+        <RouterProvider router={router} />
+      </CartProvider>
     </ThemeProvider>
   </StrictMode>
 );
