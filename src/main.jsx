@@ -6,7 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import Shop from './pages/Shop.jsx'
 import CartPage from './pages/Cart.jsx'
 import Layout from './layouts/Layout.jsx';
-import { ThemeProvider } from './contexts/ThemeContext.jsx';
+import { ThemeProvider } from './contexts/ThemeProvider.jsx';
 
 const router = createBrowserRouter([
   {
