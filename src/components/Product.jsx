@@ -2,10 +2,14 @@ import { Card, CardContent, CardMedia, Typography, Box, Button } from "@mui/mate
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { useTheme } from '../contexts/ThemeContext.jsx';
+import { useState } from "react";
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 
 const Product = ({ product, callbackFn, productCount }) => {
     const { isMobile, getThemeColors } = useTheme();
     const themeColors = getThemeColors();
+    const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const mobileStyle = {
         maxWidth: 170,
@@ -31,7 +35,34 @@ const Product = ({ product, callbackFn, productCount }) => {
         alignItems: "center"
     }
 
-    //Description should be moved to dropdown menu
+    const boxStyle = {
+        backgroundColor: "#0080ff",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        borderRadius: "4px",
+        marginTop: "12px"
+    }
+
+    const dropdownBarStyle = {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        alignItems: "center",
+        '&:hover': {
+            cursor: "pointer",
+        }
+    }
+
+    const toggleDropdownOpen = () => {
+        if (dropdownOpen) {
+            setDropdownOpen(false);
+        }
+        else {
+            setDropdownOpen(true);
+        }
+    }
+
     //Figure out why the padding for the images is not working
 
     return (
@@ -52,14 +83,7 @@ const Product = ({ product, callbackFn, productCount }) => {
                         <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mb: 1 }}>
                             ${product.price}
                         </Typography>
-                        <Box style={{
-                            backgroundColor: "#0080ff",
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            borderRadius: "4px",
-                            marginTop: "12px"
-                        }}
+                        <Box style={boxStyle}
                         >
                             <Button onClick={() => callbackFn(product, "remove")}><RemoveIcon style={{ color: "white" }} /></Button>
                             <Typography variant="h6" color="primary" sx={{ fontWeight: "bold", color: "white" }}>{productCount}</Typography>
@@ -84,17 +108,22 @@ const Product = ({ product, callbackFn, productCount }) => {
                         <Typography variant="h6" sx={{ fontWeight: 'bold', mb: 1 }}>
                             ${product.price}
                         </Typography>
-                        <Typography variant="body1">
-                            {product.description}
-                        </Typography>
-                        <Box style={{
-                            backgroundColor: "#0080ff",
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            borderRadius: "4px",
-                            marginTop: "12px"
-                        }}
+                        {dropdownOpen ? (
+                            <>
+                                <Typography variant="body1" sx={dropdownBarStyle} onClick={toggleDropdownOpen}>
+                                    Description {<ArrowDropDownIcon />}
+                                </Typography>
+                                <Typography variant="body1">
+                                    {product.description}
+                                </Typography>
+                            </>
+                        ) : (
+                            <Typography variant="body1" sx={dropdownBarStyle} onClick={toggleDropdownOpen}>
+                                Description {<ArrowRightIcon />}
+                            </Typography>
+                        )}
+
+                        <Box style={boxStyle}
                         >
                             <Button onClick={() => callbackFn(product, "remove")}><RemoveIcon style={{ color: "white" }} /></Button>
                             <Typography variant="h5" color="primary" sx={{ fontWeight: "bold", color: "white" }}>{productCount}</Typography>
