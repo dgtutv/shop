@@ -30,6 +30,7 @@ const Shop = () => {
             <div style={productsStyle}>
                {products.map((product) => (
                   <Product
+                     key={product.id}
                      product={product}
                      callbackFn={handleCartChange}
                      productCount={productCounts[product.id - 1] || 0}

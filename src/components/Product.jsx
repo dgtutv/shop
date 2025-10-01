@@ -7,13 +7,37 @@ const Product = ({ product, callbackFn, productCount }) => {
     const { isMobile, getThemeColors } = useTheme();
     const themeColors = getThemeColors();
 
+    const mobileStyle = {
+        maxWidth: 170,
+        margin: 1,
+        bgcolor: themeColors.cardBg,
+        color: themeColors.textColor,
+        boxShadow: `0 4px 6px ${themeColors.boxShadow}`,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        alignItems: "center"
+    }
+
+    const desktopStyle = {
+        maxWidth: 345,
+        margin: 1,
+        bgcolor: themeColors.cardBg,
+        color: themeColors.textColor,
+        boxShadow: `0 4px 6px ${themeColors.boxShadow}`,
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "space-between",
+        alignItems: "center"
+    }
+
     //Description should be moved to dropdown menu
     //Figure out why the padding for the images is not working
 
     return (
         <>
             {isMobile ?
-                <Card sx={{ maxWidth: 170, margin: 1, bgcolor: themeColors.cardBg, color: themeColors.textColor, boxShadow: `0 4px 6px ${themeColors.boxShadow}`, display: "flex", flexDirection: "column", justifyContent: "space-between", alignItems: "center" }}>
+                <Card sx={mobileStyle}>
                     <CardMedia
                         component="img"
                         height="100"
@@ -45,7 +69,7 @@ const Product = ({ product, callbackFn, productCount }) => {
                     </CardContent>
                 </Card>
                 :
-                <Card sx={{ maxWidth: 345, margin: 1, bgcolor: themeColors.cardBg, color: themeColors.textColor, boxShadow: `0 4px 6px ${themeColors.boxShadow}`, display: "flex", flexDirection: "column", justifyContent: "space-between", alignItems: "center" }}>
+                <Card sx={desktopStyle}>
                     <CardMedia
                         component="img"
                         height="200"
