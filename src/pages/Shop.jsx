@@ -4,10 +4,18 @@ import Product from '../components/Product';
 const Shop = () => {
    const [products, setProducts] = useState([]);
    const [productCounts, setProductCounts] = useState([]);
-   const [cart, setCart] = useState([]);
-   const [numItems, setNumItems] = useState(0);    //Create a cart context, move logic there, use in header to display number of items in cart
+   const [numItems, setNumItems] = useState(0);
    const [loading, setLoading] = useState(true);
+   const [dataLoaded, setDataLoaded] = useState(false);
    const URL = 'https://fakestoreapi.com/products';
+
+   const getNumItems = (counts) => {
+      let runningCount = 0;
+      for(let i = 0; i < counts.length; i++){
+         runningCount += counts[i];
+      }
+      return runningCount;
+   }
 
    // Load products only once
    useEffect(() => {
@@ -20,11 +28,6 @@ const Shop = () => {
             }
             const data = await response.json();
             setProducts(data);
-            
-            // Initialize product counts array
-            const newCounts = new Array(data.length).fill(0);
-            setProductCounts(newCounts);
-            
             return data;
          }
          catch (error) {
@@ -37,67 +40,72 @@ const Shop = () => {
       }
 
       getProducts();
-   }, []); // Only run once on mount
-
-   // Load cart from localStorage only once
-   useEffect(() => {
-      const savedCart = localStorage.getItem('cart');
-      if (savedCart) {
-         try {
-            const parsedCart = JSON.parse(savedCart);
-            if (Array.isArray(parsedCart)) {
-               setCart(parsedCart);
-               setNumItems(parsedCart.length);
-            }
-         } catch (error) {
-            console.error("Error parsing saved cart:", error);
-            setCart([]);
-         }
-      }
    }, []);
-
-   // Update product counts when cart or products change
    useEffect(() => {
-      if (products.length > 0) {
-         const newCounts = new Array(products.length).fill(0);
+      if (products.length > 0 && !dataLoaded) {
+         const savedCounts = localStorage.getItem('productCounts');
          
-         // Count items in cart
-         cart.forEach(product => {
-            const productIndex = products.findIndex(p => p.id === product.id);
-            if (productIndex !== -1) {
-               newCounts[productIndex]++;
+         if (savedCounts) {
+            try {
+               const parsedCounts = JSON.parse(savedCounts);
+               if (Array.isArray(parsedCounts) && parsedCounts.length === products.length) {
+                  // Use saved data if it matches product length
+                  console.log("Loading saved counts:", parsedCounts);
+                  setProductCounts(parsedCounts);
+                  setNumItems(getNumItems(parsedCounts));
+               } 
+               else{
+                  // Initialize with zeros if saved data doesn't match
+                  console.log("Saved data doesn't match, initializing with zeros");
+                  const newCounts = new Array(products.length).fill(0);
+                  setProductCounts(newCounts);
+                  setNumItems(0);
+               }
+            } 
+            catch (error){
+               console.error("Error parsing saved counts:", error);
+               const newCounts = new Array(products.length).fill(0);
+               setProductCounts(newCounts);
+               setNumItems(0);
             }
-         });
+         } 
+         else{
+            // No saved data, initialize with zeros
+            console.log("No saved data, initializing with zeros");
+            const newCounts = new Array(products.length).fill(0);
+            setProductCounts(newCounts);
+            setNumItems(0);
+         }
          
-         setProductCounts(newCounts);
+         setDataLoaded(true);
       }
-   }, [cart, products]);
+   }, [products, dataLoaded]);
 
-   // Debounced localStorage save
+   // Save to localStorage when productCounts changes (but only after initial load)
    useEffect(() => {
-      const timeoutId = setTimeout(() => {
-         localStorage.setItem('cart', JSON.stringify(cart));
-      }, 100); // Save after 100ms of no changes
+      if (dataLoaded && productCounts.length > 0) {
+         console.log("Saving to localStorage:", productCounts);
+         localStorage.setItem('productCounts', JSON.stringify(productCounts));
+         setNumItems(getNumItems(productCounts));
+      }
+   }, [productCounts, dataLoaded]);
 
-      return () => clearTimeout(timeoutId);
-   }, [cart]);
-
-   function addToCart(product) {
-      setCart(prevCart => [...prevCart, product]);
-      setNumItems(prevNum => prevNum + 1);
+   function addToCart(product){
+      setProductCounts(prevCounts => {
+         const newProductCounts = [...prevCounts];
+         const index = product.id - 1;
+         newProductCounts[index] = newProductCounts[index] + 1;
+         return newProductCounts;
+      });
    }
 
-   function removeFromCart(product) {
-      setCart(prevCart => {
-         const newCart = [...prevCart];
-         const itemIndex = newCart.findLastIndex(item => item.id === product.id);
-         if (itemIndex !== -1) {
-            newCart.splice(itemIndex, 1);
-         }
-         return newCart;
+   function removeFromCart(product){
+      setProductCounts(prevCounts => {
+         const newProductCounts = [...prevCounts];
+         const index = product.id - 1;
+         newProductCounts[index] = Math.max(newProductCounts[index] - 1, 0);
+         return newProductCounts;
       });
-      
-      setNumItems(prevNum => Math.max(0, prevNum - 1));
    }
 
    const handleCartChange = (product, action) => {
@@ -115,6 +123,7 @@ const Shop = () => {
 
    return (
       <div>
+         <p>Items in cart: {numItems}</p>
          {products.length > 0 ? (
             <Product
                product={products[0]}
