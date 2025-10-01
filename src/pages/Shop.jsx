@@ -63,12 +63,21 @@ const Shop = () => {
         setNumItems(numItems-1);
     }
 
+    const handleCartChange = (product, action) => {
+        if(action === 'add'){
+            addToCart(product);
+        } 
+        else if(action === "remove"){
+            removeFromCart(product);
+        }
+    };
+
     return (
         <div>
             <h1>Shop Page</h1>
             <p>You are currently on the Shop page.</p>
             {products.length > 0 ?
-                <Product product={products[0]}/>
+                <Product product={products[0]} callbackFn={handleCartChange} productCount={productCounts[products[0].id-1]}/>
             :
                 <p>loading ... </p>
             }

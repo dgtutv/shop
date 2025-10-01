@@ -1,6 +1,9 @@
-import { Card, CardContent, CardMedia, Typography, Box } from "@mui/material";
+import { Card, CardContent, CardMedia, Typography, Box, Button } from "@mui/material";
+import { useCallback } from "react";
+import AddIcon from '@mui/icons-material/Add';
+import RemoveIcon from '@mui/icons-material/Remove';
 
-const Product = ({product}) =>{
+const Product = ({product, callbackFn, productCount}) =>{
 
     return(
         <Card sx={{ maxWidth: 345, margin: 2 }}>
@@ -21,6 +24,18 @@ const Product = ({product}) =>{
                 <Typography variant="body2" color="text.secondary">
                     {product.description}
                 </Typography>
+                <Box style={{
+                    backgroundColor: "#0080ff",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center"
+                }}
+                >
+                    <Button onClick={useCallback(callbackFn, [product, "remove"])}><RemoveIcon style={{color: "white"}}/></Button>
+                    <Typography variant="h5" color="primary" sx={{ fontWeight: "bold", color: "white" }}>{productCount}</Typography>
+                    <Button onClick={useCallback(callbackFn, [product, "add"])}><AddIcon style={{color: "white"}}/></Button>
+
+                </Box>
             </CardContent>
         </Card>
     );
