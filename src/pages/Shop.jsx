@@ -1,4 +1,5 @@
-import React, { use, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import Product from '../components/Product';
 
 const Shop = () => {
     const [products, setProducts] = useState([]);
@@ -66,6 +67,12 @@ const Shop = () => {
         <div>
             <h1>Shop Page</h1>
             <p>You are currently on the Shop page.</p>
+            {products.length > 0 ?
+                <Product product={products[0]}/>
+            :
+                <p>loading ... </p>
+            }
+            
         </div>
     );
 };
