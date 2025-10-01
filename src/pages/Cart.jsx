@@ -1,5 +1,7 @@
 import React from 'react';
 
+//Retrieve and write card via localStorage
+
 const CartPage = () => {
     return (
         <div>
