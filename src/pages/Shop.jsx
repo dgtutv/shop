@@ -45,22 +45,31 @@ const Shop = () => {
     //id = index-1
     function addToCart(product){
         setCart(prevCart => [...prevCart, product]);
-        const updatedProductCount = productCounts[product.id-1]+1;
-        const updatedProductCounts = productCounts;
-        updatedProductCounts[product.id-1] = updatedProductCount;
-        setProductCounts(updatedProductCount);
-        setNumItems(numItems+1);
+        setProductCounts(prevCounts => {
+            const newCounts = [...prevCounts];
+            newCounts[product.id-1] = newCounts[product.id-1] + 1;
+            return newCounts;
+        });
+        setNumItems(prevNum => prevNum + 1);
     }
 
     function removeFromCart(product){
-        const updatedCart = cart
-        updatedCart.splice(cart.findLastIndex(item => item.id === product.id), 1);
-        setCart(updatedCart);
-        const updatedProductCount = productCounts[product.id-1]-1;
-        const updatedProductCounts = productCounts;
-        updatedProductCounts[product.id-1] = updatedProductCount;
-        setProductCounts(updatedProductCount);
-        setNumItems(numItems-1);
+        setCart(prevCart => {
+            const newCart = [...prevCart];
+            const itemIndex = newCart.findLastIndex(item => item.id === product.id);
+            if (itemIndex !== -1) {
+                newCart.splice(itemIndex, 1);
+            }
+            return newCart;
+        });
+        setProductCounts(prevCounts => {
+            const newCounts = [...prevCounts];
+            if (newCounts[product.id-1] > 0) {
+                newCounts[product.id-1] = newCounts[product.id-1] - 1;
+            }
+            return newCounts;
+        });
+        setNumItems(prevNum => Math.max(0, prevNum - 1));
     }
 
     const handleCartChange = (product, action) => {
