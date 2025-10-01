@@ -4,7 +4,7 @@
   font-weight: 400;
 
   color-scheme: light dark;
-
+  
   /* Dark mode variables */
   --text-color: rgba(255, 255, 255, 0.87);
   --bg-color: #242424;
@@ -12,7 +12,9 @@
   --border-color: #404040;
   --link-color: #646cff;
   --link-hover: #535bf2;
-
+  --card-bg: #1b1b1bff;
+  --box-shadow: rgba(0, 0, 0, 0.86);
+  
   color: var(--text-color);
   background-color: var(--bg-color);
 
@@ -77,11 +79,13 @@ button:focus-visible {
 @media (prefers-color-scheme: light) {
   :root {
     --text-color: #213547;
-    --bg-color: #ffffff;
+    --bg-color: #dde4e6ff;
     --header-bg: #f8f9fa;
     --border-color: #e0e0e0;
     --link-color: #646cff;
     --link-hover: #747bff;
+    --card-bg: #ffffffff;
+    --box-shadow: rgba(117, 117, 117, 0.86);
   }
 
   button {

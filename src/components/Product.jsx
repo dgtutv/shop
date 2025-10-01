@@ -1,11 +1,15 @@
 import { Card, CardContent, CardMedia, Typography, Box, Button } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import { useTheme } from '../contexts/ThemeContext.jsx';
 
 const Product = ({product, callbackFn, productCount}) =>{
+    const { isMobile, getThemeColors } = useTheme();
+    const themeColors = getThemeColors();
+
 
     return(
-        <Card sx={{ maxWidth: 345, margin: 2 }}>
+        <Card sx={{ maxWidth: 345, margin: 2, bgcolor: themeColors.cardBg, color: themeColors.textColor, boxShadow: `0 4px 6px ${themeColors.boxShadow}` }}>
             <CardMedia
                 component="img"
                 height="200"
@@ -17,17 +21,19 @@ const Product = ({product, callbackFn, productCount}) =>{
                 <Typography gutterBottom variant="h6" component="div">
                     {product.title}
                 </Typography>
-                <Typography variant="h5" color="primary" sx={{ fontWeight: 'bold', mb: 1 }}>
+                <Typography variant="h5" sx={{ fontWeight: 'bold', mb: 1 }}>
                     ${product.price}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography variant="body2">
                     {product.description}
                 </Typography>
                 <Box style={{
                     backgroundColor: "#0080ff",
                     display: "flex",
                     justifyContent: "space-between",
-                    alignItems: "center"
+                    alignItems: "center",
+                    borderRadius: "4px",
+                    marginTop: "6px"
                 }}
                 >
                     <Button onClick={() => callbackFn(product, "remove")}><RemoveIcon style={{color: "white"}}/></Button>

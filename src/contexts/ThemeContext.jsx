@@ -54,24 +54,26 @@ export const ThemeProvider = ({ children }) => {
     const computedStyle = getComputedStyle(root);
     
     return {
-      textColor: computedStyle.getPropertyValue('--text-color').trim() || (isDarkMode ? 'rgba(255, 255, 255, 0.87)' : '#213547'),
-      bgColor: computedStyle.getPropertyValue('--bg-color').trim() || (isDarkMode ? '#242424' : '#ffffff'),
-      headerBg: computedStyle.getPropertyValue('--header-bg').trim() || (isDarkMode ? '#1a1a1a' : '#f8f9fa'),
-      borderColor: computedStyle.getPropertyValue('--border-color').trim() || (isDarkMode ? '#404040' : '#e0e0e0'),
-      linkColor: computedStyle.getPropertyValue('--link-color').trim() || '#646cff',
-      linkHover: computedStyle.getPropertyValue('--link-hover').trim() || (isDarkMode ? '#535bf2' : '#747bff'),
+        textColor: computedStyle.getPropertyValue('--text-color').trim() || (isDarkMode ? 'rgba(255, 255, 255, 0.87)' : '#213547'),
+        bgColor: computedStyle.getPropertyValue('--bg-color').trim() || (isDarkMode ? '#242424' : '#dde4e6ff'),
+        headerBg: computedStyle.getPropertyValue('--header-bg').trim() || (isDarkMode ? '#1a1a1a' : '#f8f9fa'),
+        borderColor: computedStyle.getPropertyValue('--border-color').trim() || (isDarkMode ? '#404040' : '#e0e0e0'),
+        linkColor: computedStyle.getPropertyValue('--link-color').trim() || '#646cff',
+        linkHover: computedStyle.getPropertyValue('--link-hover').trim() || (isDarkMode ? '#535bf2' : '#747bff'),
+        cardBg: computedStyle.getPropertyValue('--card-bg').trim() || (isDarkMode ? '#1b1b1bff' : '#ffffffff'),
+        boxShadow: computedStyle.getPropertyValue('--box-shadow').trim() || (isDarkMode ? 'rgba(0, 0, 0, 0.86)' : 'rgba(117, 117, 117, 0.86)'),
     };
   }, [isDarkMode]);
 
   const value = {
-    isDarkMode,
-    isMobile,
-    getThemeColors,
+        isDarkMode,
+        isMobile,
+        getThemeColors,
   };
 
   return (
-    <ThemeContext.Provider value={value}>
-      {children}
-    </ThemeContext.Provider>
-  );
+        <ThemeContext.Provider value={value}>
+            {children}
+        </ThemeContext.Provider>
+    );
 };
