@@ -7,6 +7,8 @@ const Product = ({ product, callbackFn, productCount }) => {
     const { isMobile, getThemeColors } = useTheme();
     const themeColors = getThemeColors();
 
+    //Description should be moved to dropdown menu
+    //Figure out why the padding for the images is not working
 
     return (
         <>
