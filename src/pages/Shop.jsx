@@ -17,17 +17,30 @@ const Shop = () => {
       return <p>Loading products...</p>;
    }
 
+   const productsStyle = {
+      display: "flex",
+      flexWrap: "wrap",
+      justifyContent: "space-evenly",
+      paddingTop: "15px"
+   }
+
    return (
       <div>
          {products.length > 0 ? (
-            <Product
-               product={products[0]}
-               callbackFn={handleCartChange}
-               productCount={productCounts[0] || 0}
-            />
-         ) : (
-            <p>No products available</p>
-         )}
+            <div style={productsStyle}>
+               {products.map((product) => (
+                  <Product
+                     product={product}
+                     callbackFn={handleCartChange}
+                     productCount={productCounts[product.id - 1] || 0}
+                  />
+               ))
+               }
+            </div>
+         )
+            : (
+               <p>No products available</p>
+            )}
       </div>
    );
 };
