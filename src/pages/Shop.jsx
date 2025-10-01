@@ -5,7 +5,7 @@ const Shop = () => {
    const [products, setProducts] = useState([]);
    const [productCounts, setProductCounts] = useState([]);
    const [cart, setCart] = useState([]);
-   const [numItems, setNumItems] = useState(0);
+   const [numItems, setNumItems] = useState(0);    //Create a cart context, move logic there, use in header to display number of items in cart
    const [loading, setLoading] = useState(true);
    const URL = 'https://fakestoreapi.com/products';
 
