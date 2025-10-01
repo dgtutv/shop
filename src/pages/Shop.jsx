@@ -18,7 +18,7 @@ const Shop = () => {
                     throw new Error("Incorrect URL or connection issue.");
                 }
                 const data = await response.json();
-                return data.data;
+                return data;
             }
             catch (error) {
                 console.error("Error:", error);
@@ -29,17 +29,21 @@ const Shop = () => {
             }
         }
 
-        getProducts.then((products) => {
-            setProducts(products);
-            for(let i=0; i<products.length; i++){
-                setProductCounts([...products, 0])
-            }
-        })
-    })
+        getProducts().then((productsData) => {
+            setTimeout(() => {
+                setProducts(productsData);
+                setProductCounts(new Array(productsData.length).fill(0));
+            }, 500);
+        });
+
+
+        
+
+    }, [])
 
     //id = index-1
     function addToCart(product){
-        setCart([...cart, product]);
+        setCart(prevCart => [...prevCart, product]);
         const updatedProductCount = productCounts[product.id-1]++;
         setProductCounts(updatedProductCount);
         setNumItems(numItems+1);
