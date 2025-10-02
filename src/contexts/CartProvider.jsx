@@ -4,20 +4,12 @@ import { CartContext } from './CartContext';
 export const CartProvider = ({ children }) => {
     const [products, setProducts] = useState([]);
     const [productCounts, setProductCounts] = useState([]);
-    const [numItems, setNumItems] = useState(0);
     const [loading, setLoading] = useState(true);
     const [dataLoaded, setDataLoaded] = useState(false);
     const [saveForLater, setSaveForLater] = useState([]);       //Bitmap
     const URL = 'https://fakestoreapi.com/products';
 
     // ------ Helper Functions --------- //
-    const getNumItems = (counts) => {
-        let runningCount = 0;
-        for (let i = 0; i < counts.length; i++) {
-            runningCount += counts[i];
-        }
-        return runningCount;
-    }
     function addToCart(product) {
         setProductCounts(prevCounts => {
             const newProductCounts = [...prevCounts];
@@ -66,9 +58,9 @@ export const CartProvider = ({ children }) => {
 
     function getNumSaved() {
         let sum = 0;
-        for (let i = 0; i < saveForLater.length; i++) {
+        for (let i = 0; i < products.length; i++) {
             if (saveForLater[i] === 1) {
-                sum++;
+                sum += productCounts[i];
             }
         }
         return sum;
@@ -79,6 +71,16 @@ export const CartProvider = ({ children }) => {
         for (let i = 0; i < products.length; i++) {
             if (saveForLater[i] === 0) {
                 sum += (products[i].price * productCounts[i]);
+            }
+        }
+        return sum;
+    }
+
+    function getTotalItems() {
+        let sum = 0;
+        for (let i = 0; i < products.length; i++) {
+            if (saveForLater[i] === 0) {
+                sum += productCounts[i];
             }
         }
         return sum;
@@ -123,21 +125,18 @@ export const CartProvider = ({ children }) => {
                         // Use saved data if it matches product length
                         console.log("Loading saved counts:", parsedCounts);
                         setProductCounts(parsedCounts);
-                        setNumItems(getNumItems(parsedCounts));
                     }
                     else {
                         // Initialize with zeros if saved data doesn't match
                         console.log("Saved data doesn't match, initializing with zeros");
                         const newCounts = new Array(products.length).fill(0);
                         setProductCounts(newCounts);
-                        setNumItems(0);
                     }
                 }
                 catch (error) {
                     console.error("Error parsing saved counts:", error);
                     const newCounts = new Array(products.length).fill(0);
                     setProductCounts(newCounts);
-                    setNumItems(0);
                 }
             }
             else {
@@ -145,7 +144,6 @@ export const CartProvider = ({ children }) => {
                 console.log("No saved product data, initializing with zeros");
                 const newCounts = new Array(products.length).fill(0);
                 setProductCounts(newCounts);
-                setNumItems(0);
             }
 
             if (savedSaveForLater) {
@@ -185,7 +183,6 @@ export const CartProvider = ({ children }) => {
         if (dataLoaded && productCounts.length > 0) {
             console.log("Saving to localStorage:", productCounts);
             localStorage.setItem('productCounts', JSON.stringify(productCounts));
-            setNumItems(getNumItems(productCounts));
             localStorage.setItem('saveForLater', JSON.stringify(saveForLater));
         }
     }, [productCounts, dataLoaded, saveForLater]);
@@ -193,7 +190,7 @@ export const CartProvider = ({ children }) => {
     const value = {
         products,
         productCounts,
-        numItems,
+        getTotalItems,
         loading,
         addToCart,
         saveForLater,
