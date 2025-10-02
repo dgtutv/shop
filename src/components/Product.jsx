@@ -29,6 +29,7 @@ const Product = ({ product, callbackFn, productCount }) => {
     const mobileStyle = {
         ...baseCardStyle,
         width: 140,
+        marginX: 0
     };
 
     const desktopStyle = {
