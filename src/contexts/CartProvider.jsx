@@ -176,6 +176,7 @@ export const CartProvider = ({ children }) => {
         numItems,
         loading,
         addToCart,
+        saveForLater,
         removeFromCart,
         saveForLaterFn,
         moveBackToCartFn,

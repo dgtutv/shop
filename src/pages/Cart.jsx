@@ -2,7 +2,7 @@ import { useCart } from '../contexts/CartContext';
 import CartProduct from '../components/CartProduct';
 
 const CartPage = () => {
-    const { products, productCounts, loading, addToCart, removeFromCart, saveForLaterFn, moveBackToCartFn, removeAll } = useCart();
+    const { products, productCounts, loading, addToCart, removeFromCart, saveForLaterFn, moveBackToCartFn, removeAll, saveForLater } = useCart();
 
     const handleCartChange = (product, action) => {
         if (action === 'add') addToCart(product);
@@ -15,7 +15,7 @@ const CartPage = () => {
         <div>
             <h1>Cart Page</h1>
             <p>You are currently on the Cart page.</p>
-            {products.filter(product => productCounts[product.id - 1] !== 0).map((product) => (
+            {products.filter(product => productCounts[product.id - 1] !== 0 && saveForLater[product.id - 1] === 0).map((product) => (
                 <CartProduct
                     key={product.id}
                     product={product}
