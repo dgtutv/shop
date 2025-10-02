@@ -136,8 +136,8 @@ const CartProduct = ({ product, removeAll, totalFn, editByOne, productCount }) =
                 </Typography>
             </Box>
             <Box style={bottomRowStyle}>
-                <a href="#" style={linkStyle} onClick={removeAll([product])}>Remove</a>
-                <a href="#" style={linkStyle} onClick={totalFn(product)}>saveForLater</a>
+                <a href="#" style={linkStyle} onClick={() => removeAll([product])}>Remove</a>
+                <a href="#" style={linkStyle} onClick={() => totalFn(product)}>saveForLater</a>
                 {/* Add/Remove buttons */}
                 <Box sx={boxStyle}>
                     <Button onClick={() => editByOne(product, "remove")}>
