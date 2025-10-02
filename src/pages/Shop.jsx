@@ -21,7 +21,7 @@ const Shop = () => {
       display: "flex",
       flexWrap: "wrap",
       justifyContent: "space-evenly",
-      paddingTop: "15px"
+      paddingTop: "15px",
    }
 
    return (
