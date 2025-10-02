@@ -136,7 +136,7 @@ const CartProduct = ({ product, removeAll, totalFn, editByOne, productCount, isS
 
             </Box>
             <Box style={bottomRowStyle}>
-                <a href="#" onClick={() => removeAll([product])}>Remove</a>
+                <a href="#" onClick={() => removeAll(product)}>Remove all</a>
                 {isSaved ? (
                     <a href="#" onClick={() => totalFn(product)}>Move to cart</a>
                 ) : (
