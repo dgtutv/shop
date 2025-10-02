@@ -7,6 +7,7 @@ export const CartProvider = ({ children }) => {
     const [numItems, setNumItems] = useState(0);
     const [loading, setLoading] = useState(true);
     const [dataLoaded, setDataLoaded] = useState(false);
+    const [saveForLater, setSaveForLater] = useState([]);       //Bitmap
     const URL = 'https://fakestoreapi.com/products';
 
     // ------ Helper Functions --------- //
@@ -32,6 +33,25 @@ export const CartProvider = ({ children }) => {
             const index = product.id - 1;
             newProductCounts[index] = Math.max(newProductCounts[index] - 1, 0);
             return newProductCounts;
+        });
+    }
+
+    //Simple bitmap representations control the save for later section
+    function saveForLaterFn(product) {
+        const index = product.id - 1;
+        setSaveForLater(prevMap => {
+            const newMap = [...prevMap];
+            newMap[index] = 1;
+            return newMap;
+        });
+    }
+
+    function moveBackToCartFn(product) {
+        const index = product.id - 1;
+        setSaveForLater(prevMap => {
+            const newMap = [...prevMap];
+            newMap[index] = 0;
+            return newMap;
         });
     }
 
@@ -65,6 +85,7 @@ export const CartProvider = ({ children }) => {
     useEffect(() => {
         if (products.length > 0 && !dataLoaded) {
             const savedCounts = localStorage.getItem('productCounts');
+            const savedSaveForLater = localStorage.getItem('saveForLater');
 
             if (savedCounts) {
                 try {
@@ -92,10 +113,38 @@ export const CartProvider = ({ children }) => {
             }
             else {
                 // No saved data, initialize with zeros
-                console.log("No saved data, initializing with zeros");
+                console.log("No saved product data, initializing with zeros");
                 const newCounts = new Array(products.length).fill(0);
                 setProductCounts(newCounts);
                 setNumItems(0);
+            }
+
+            if (savedSaveForLater) {
+                try {
+                    const parsedCounts = JSON.parse(savedSaveForLater);
+                    if (Array.isArray(parsedCounts) && parsedCounts.length === products.length) {
+                        // Use saved data if it matches product length
+                        console.log("Loading saved save for later bitmap:", parsedCounts);
+                        setSaveForLater(parsedCounts);
+                    }
+                    else {
+                        // Initialize with zeros if saved data doesn't match
+                        console.log("Saved data doesn't match, initializing with zeros");
+                        const newCounts = new Array(products.length).fill(0);
+                        setSaveForLater(newCounts);
+                    }
+                }
+                catch (error) {
+                    console.error("Error parsing saved counts:", error);
+                    const newCounts = new Array(products.length).fill(0);
+                    setSaveForLater(newCounts);
+                }
+            }
+            else {
+                // No saved data, initialize with zeros
+                console.log("No saved bitmap data, initializing with zeros");
+                const newCounts = new Array(products.length).fill(0);
+                setSaveForLater(newCounts);
             }
 
             setDataLoaded(true);
@@ -108,8 +157,9 @@ export const CartProvider = ({ children }) => {
             console.log("Saving to localStorage:", productCounts);
             localStorage.setItem('productCounts', JSON.stringify(productCounts));
             setNumItems(getNumItems(productCounts));
+            localStorage.setItem('saveForLater', JSON.stringify(saveForLater));
         }
-    }, [productCounts, dataLoaded]);
+    }, [productCounts, dataLoaded, saveForLater]);
 
     const value = {
         products,
@@ -117,7 +167,9 @@ export const CartProvider = ({ children }) => {
         numItems,
         loading,
         addToCart,
-        removeFromCart
+        removeFromCart,
+        saveForLaterFn,
+        moveBackToCartFn,
     }
 
     return (
