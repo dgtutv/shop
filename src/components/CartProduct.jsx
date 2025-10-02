@@ -59,14 +59,14 @@ const CartProduct = ({ product, removeAll, totalFn, editByOne, productCount, isS
         flexDirection: "row",
         justifyContent: "flex-start",
         alignItems: "center",
-        width: "60%"
+        width: "60%",
+        textAlign: "end"
     }
 
     const infoStyleMobile = {
         ...infoStyle,
         width: "100%",
-        justifyContent: "flex-end",
-        textAlign: "end"
+        justifyContent: "space-between"
     }
 
     const bottomRowStyle = {
@@ -187,7 +187,7 @@ const CartProduct = ({ product, removeAll, totalFn, editByOne, productCount, isS
                             </Box>
 
                             <Box>
-                                <Typography gutterBottom variant={"h5"} component="div">
+                                <Typography gutterBottom variant={"h5"} component="div" sx={{ textAlign: "start" }}>
                                     {product.title}
                                 </Typography>
 
@@ -208,7 +208,7 @@ const CartProduct = ({ product, removeAll, totalFn, editByOne, productCount, isS
                             </Box>
 
                         </Box>
-                        <Box>
+                        <Box sx={{ textAlign: "end" }}>
                             <Typography variant={"h5"} sx={{ fontWeight: 'bold', mb: 1 }}>
                                 <i>Total: </i>${(productCount * Number(product.price)).toFixed(2)}
                             </Typography>
