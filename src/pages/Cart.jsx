@@ -39,7 +39,10 @@ const CartPage = () => {
                     isSaved={false}
                 />
             ))}
-            <h3 style={sumStyling}>Cart Total: ${getTotalCart()}</h3>
+            {numItems() !== 0 ? (
+                <h3 style={sumStyling}>Cart Total: ${getTotalCart()}</h3>
+            ) : (<></>)}
+
             <br />
             <h1 style={headerStyling}>Saved For Later ({getNumSaved()})</h1>
             {products.filter(product => productCounts[product.id - 1] !== 0 && saveForLater[product.id - 1] === 1).map((product) => (
