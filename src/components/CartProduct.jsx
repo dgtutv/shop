@@ -7,13 +7,11 @@ import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useState } from "react";
 
 const CartProduct = ({ product, removeAll, totalFn, editByOne, productCount, isSaved }) => {
-    const { isMobile, getThemeColors, underThreshold } = useTheme();
+    const { isMobile, getThemeColors } = useTheme();
     const themeColors = getThemeColors();
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const toggleDropdownOpen = () => setDropdownOpen(prev => !prev);
-
-    //1100px media query
 
     // MUI spacing, 1 = 8px
     const baseCardStyle = {
@@ -74,7 +72,7 @@ const CartProduct = ({ product, removeAll, totalFn, editByOne, productCount, isS
     }
 
     return (
-        <Card sx={underThreshold ? cardBelowThreshold : baseCardStyle}>
+        <Card sx={baseCardStyle}>
             <Box style={topRowStyle}>
                 <Box style={infoStyle}>
                     {/*Image */}
@@ -127,17 +125,22 @@ const CartProduct = ({ product, removeAll, totalFn, editByOne, productCount, isS
                     </Box>
 
                 </Box>
+                <Box>
+                    <Typography variant={isMobile ? "subtitle1" : "h5"} sx={{ fontWeight: 'bold', mb: 1 }}>
+                        <i>Total: </i>${(productCount * Number(product.price)).toFixed(2)}
+                    </Typography>
+                    <Typography variant={isMobile ? "subtitle2" : "h6"} sx={{ fontWeight: 'bold', mb: 1 }}>
+                        <i>Unit price: </i>${product.price.toFixed(2)}
+                    </Typography>
+                </Box>
 
-                <Typography variant={isMobile ? "subtitle1" : "h6"} sx={{ fontWeight: 'bold', mb: 1 }}>
-                    ${product.price}
-                </Typography>
             </Box>
             <Box style={bottomRowStyle}>
                 <a href="#" onClick={() => removeAll([product])}>Remove</a>
                 {isSaved ? (
                     <a href="#" onClick={() => totalFn(product)}>Move to cart</a>
                 ) : (
-                    <a href="#" onClick={() => totalFn(product)}>saveForLater</a>
+                    <a href="#" onClick={() => totalFn(product)}>Save for later</a>
                 )}
                 {/* Add/Remove buttons */}
                 <Box sx={boxStyle}>
