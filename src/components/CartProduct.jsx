@@ -1,4 +1,4 @@
-import { Card, CardContent, Typography, Box, Button } from "@mui/material";
+import { Card, Typography, Box, Button } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -62,100 +62,187 @@ const CartProduct = ({ product, removeAll, totalFn, editByOne, productCount, isS
         width: "60%"
     }
 
+    const infoStyleMobile = {
+        ...infoStyle,
+        width: "100%",
+        justifyContent: "flex-end"
+    }
+
     const bottomRowStyle = {
         display: "flex",
         flexDirection: "row",
-        justifyContent: "flex-end",
+        justifyContent: "space-between",
         alignItems: "center",
         width: "100%",
         gap: "20px"
     }
+    const bottomLeftRowStyle = {
+        ...bottomRowStyle,
+        flexDirection: "column",
+        alignItems: "flex-start",
+        justifyContent: "flex-start"
+    }
+    const bottomLeftRowStyleDesktop = {
+        ...bottomLeftRowStyle,
+        flexDirection: "row"
+    }
 
     return (
         <Card sx={baseCardStyle}>
-            <Box style={topRowStyle}>
-                <Box style={infoStyle}>
-                    {/*Image */}
-                    <Box
-                        sx={{
-                            maxWidth: "120px",
-                            width: "10vw",
-                            minWidth: "80px",
-                            minHeight: "80px",
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            overflow: "hidden",
-                            mr: "20px",
-                        }}
-                    >
-                        <img
-                            src={product.image}
-                            alt={product.title}
-                            style={{
-                                width: "100%",
-                                height: "100%",
-                                objectFit: "contain",
-                            }}
-                        />
+            {isMobile ? (
+                <>
+                    <Box style={topRowStyle}>
+                        <Box style={infoStyleMobile}>
+                            {/*Image */}
+                            <Box
+                                sx={{
+                                    maxWidth: "120px",
+                                    width: "10vw",
+                                    minWidth: "80px",
+                                    minHeight: "80px",
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    overflow: "hidden",
+                                    mr: "20px",
+                                }}
+                            >
+                                <img
+                                    src={product.image}
+                                    alt={product.title}
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        objectFit: "contain",
+                                    }}
+                                />
+                            </Box>
+
+                            <Box>
+                                <Typography gutterBottom variant={"subtitle1"} component="div">
+                                    {product.title}
+                                </Typography>
+                                <Typography variant={"subtitle1"} sx={{ fontWeight: 'bold', mb: 1 }}>
+                                    <i>Total: </i>${(productCount * Number(product.price)).toFixed(2)}
+                                </Typography>
+                                <Typography variant={"subtitle2"} sx={{ fontWeight: 'bold', mb: 1 }}>
+                                    <i>Unit price: </i>${product.price.toFixed(2)}
+                                </Typography>
+                            </Box>
+
+                        </Box>
+
                     </Box>
+                    <Box style={bottomRowStyle}>
+                        <Box style={bottomLeftRowStyle}>
+                            {/* Add/Remove buttons */}
+                            <a href="#" onClick={() => removeAll(product)}>Remove all</a>
+                            {isSaved ? (
+                                <a href="#" onClick={() => totalFn(product)}>Move to cart</a>
+                            ) : (
+                                <a href="#" onClick={() => totalFn(product)}>Save for later</a>
+                            )}
+                        </Box>
+                        <Box sx={boxStyle}>
+                            <Button onClick={() => editByOne(product, "remove")}>
+                                <RemoveIcon style={{ color: "white" }} />
+                            </Button>
+                            <Typography variant={isMobile ? "h6" : "h5"} sx={{ fontWeight: "bold", color: "white" }}>
+                                {productCount}
+                            </Typography>
+                            <Button onClick={() => editByOne(product, "add")}>
+                                <AddIcon style={{ color: "white" }} />
+                            </Button>
+                        </Box>
+                    </Box>
+                </>
+            ) : (
+                <>
+                    <Box style={topRowStyle}>
+                        <Box style={infoStyle}>
+                            {/*Image */}
+                            <Box
+                                sx={{
+                                    maxWidth: "120px",
+                                    width: "10vw",
+                                    minWidth: "80px",
+                                    minHeight: "80px",
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    overflow: "hidden",
+                                    mr: "20px",
+                                }}
+                            >
+                                <img
+                                    src={product.image}
+                                    alt={product.title}
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        objectFit: "contain",
+                                    }}
+                                />
+                            </Box>
 
-                    <Box>
-                        <Typography gutterBottom variant={isMobile ? "subtitle1" : "h5"} component="div">
-                            {product.title}
-                        </Typography>
+                            <Box>
+                                <Typography gutterBottom variant={"h5"} component="div">
+                                    {product.title}
+                                </Typography>
 
-                        {/* Dropdown for description */}
-                        {!isMobile ? (
-                            <>
-                                {dropdownOpen ? (
-                                    <>
+                                <>
+                                    {dropdownOpen ? (
+                                        <>
+                                            <Typography variant="body1" sx={dropdownBarStyle} onClick={toggleDropdownOpen}>
+                                                Description <ArrowDropDownIcon />
+                                            </Typography>
+                                            <Typography variant="body1">{product.description}</Typography>
+                                        </>
+                                    ) : (
                                         <Typography variant="body1" sx={dropdownBarStyle} onClick={toggleDropdownOpen}>
-                                            Description <ArrowDropDownIcon />
+                                            Description <ArrowRightIcon />
                                         </Typography>
-                                        <Typography variant="body1">{product.description}</Typography>
-                                    </>
-                                ) : (
-                                    <Typography variant="body1" sx={dropdownBarStyle} onClick={toggleDropdownOpen}>
-                                        Description <ArrowRightIcon />
-                                    </Typography>
-                                )}
-                            </>
-                        ) : (<></>)}
+                                    )}
+                                </>
+                            </Box>
+
+                        </Box>
+                        <Box>
+                            <Typography variant={"h5"} sx={{ fontWeight: 'bold', mb: 1 }}>
+                                <i>Total: </i>${(productCount * Number(product.price)).toFixed(2)}
+                            </Typography>
+                            <Typography variant={"h6"} sx={{ fontWeight: 'bold', mb: 1 }}>
+                                <i>Unit price: </i>${product.price.toFixed(2)}
+                            </Typography>
+                        </Box>
+
+                    </Box >
+                    <Box style={bottomRowStyle}>
+                        <Box style={bottomLeftRowStyleDesktop}>
+                            {/* Add/Remove buttons */}
+                            <a href="#" onClick={() => removeAll(product)}>Remove all</a>
+                            {isSaved ? (
+                                <a href="#" onClick={() => totalFn(product)}>Move to cart</a>
+                            ) : (
+                                <a href="#" onClick={() => totalFn(product)}>Save for later</a>
+                            )}
+                        </Box>
+                        <Box sx={boxStyle}>
+                            <Button onClick={() => editByOne(product, "remove")}>
+                                <RemoveIcon style={{ color: "white" }} />
+                            </Button>
+                            <Typography variant={"h5"} sx={{ fontWeight: "bold", color: "white" }}>
+                                {productCount}
+                            </Typography>
+                            <Button onClick={() => editByOne(product, "add")}>
+                                <AddIcon style={{ color: "white" }} />
+                            </Button>
+                        </Box>
                     </Box>
+                </>
+            )}
 
-                </Box>
-                <Box>
-                    <Typography variant={isMobile ? "subtitle1" : "h5"} sx={{ fontWeight: 'bold', mb: 1 }}>
-                        <i>Total: </i>${(productCount * Number(product.price)).toFixed(2)}
-                    </Typography>
-                    <Typography variant={isMobile ? "subtitle2" : "h6"} sx={{ fontWeight: 'bold', mb: 1 }}>
-                        <i>Unit price: </i>${product.price.toFixed(2)}
-                    </Typography>
-                </Box>
-
-            </Box>
-            <Box style={bottomRowStyle}>
-                <a href="#" onClick={() => removeAll(product)}>Remove all</a>
-                {isSaved ? (
-                    <a href="#" onClick={() => totalFn(product)}>Move to cart</a>
-                ) : (
-                    <a href="#" onClick={() => totalFn(product)}>Save for later</a>
-                )}
-                {/* Add/Remove buttons */}
-                <Box sx={boxStyle}>
-                    <Button onClick={() => editByOne(product, "remove")}>
-                        <RemoveIcon style={{ color: "white" }} />
-                    </Button>
-                    <Typography variant={isMobile ? "h6" : "h5"} sx={{ fontWeight: "bold", color: "white" }}>
-                        {productCount}
-                    </Typography>
-                    <Button onClick={() => editByOne(product, "add")}>
-                        <AddIcon style={{ color: "white" }} />
-                    </Button>
-                </Box>
-            </Box>
-        </Card>
+        </Card >
     );
 };
 
