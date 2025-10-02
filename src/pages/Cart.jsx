@@ -27,7 +27,7 @@ const CartPage = () => {
 
     return (
         <div style={{ margin: "24px 8px" }}>
-            <h1 style={headerStyling}>Cart ({(numItems - getNumSaved())})</h1>
+            <h1 style={headerStyling}>Cart ({numItems()})</h1>
             {products.filter(product => productCounts[product.id - 1] !== 0 && saveForLater[product.id - 1] === 0).map((product) => (
                 <CartProduct
                     key={product.id}

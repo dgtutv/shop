@@ -76,7 +76,7 @@ export const CartProvider = ({ children }) => {
         return sum;
     }
 
-    function getTotalItems() {
+    const numItems = () => {
         let sum = 0;
         for (let i = 0; i < products.length; i++) {
             if (saveForLater[i] === 0) {
@@ -190,7 +190,7 @@ export const CartProvider = ({ children }) => {
     const value = {
         products,
         productCounts,
-        getTotalItems,
+        numItems,
         loading,
         addToCart,
         saveForLater,

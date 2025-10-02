@@ -57,7 +57,7 @@ const Header = () => {
                             className={({ isActive }) => isActive ? "activeLinkStyle" : "linkStyle"}
                             onClick={toggleMobileMenu}
                         >
-                            Cart ({numItems})
+                            Cart ({numItems()})
                         </NavLink>
                     </Drawer>
                     <h1>
@@ -95,7 +95,7 @@ const Header = () => {
                                 justifyContent: "center"
                             }}
                         >
-                            {<ShoppingCartIcon />} ({numItems})
+                            {<ShoppingCartIcon />} ({numItems()})
                         </NavLink>
                     </nav>
                 </header>
