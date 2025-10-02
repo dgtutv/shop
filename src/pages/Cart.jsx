@@ -13,8 +13,7 @@ const CartPage = () => {
 
     return (
         <div>
-            <h1>Cart Page</h1>
-            <p>You are currently on the Cart page.</p>
+            <h1>Cart</h1>
             {products.filter(product => productCounts[product.id - 1] !== 0 && saveForLater[product.id - 1] === 0).map((product) => (
                 <CartProduct
                     key={product.id}
@@ -23,6 +22,19 @@ const CartPage = () => {
                     totalFn={saveForLaterFn}
                     editByOne={handleCartChange}
                     productCount={productCounts[product.id - 1]}
+                    isSaved={false}
+                />
+            ))}
+            <h2>Saved For Later</h2>
+            {products.filter(product => productCounts[product.id - 1] !== 0 && saveForLater[product.id - 1] === 1).map((product) => (
+                <CartProduct
+                    key={product.id}
+                    product={product}
+                    removeAll={removeAll}
+                    totalFn={moveBackToCartFn}
+                    editByOne={handleCartChange}
+                    productCount={productCounts[product.id - 1]}
+                    isSaved={true}
                 />
             ))}
         </div>

@@ -6,7 +6,7 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useState } from "react";
 
-const CartProduct = ({ product, removeAll, totalFn, editByOne, productCount }) => {
+const CartProduct = ({ product, removeAll, totalFn, editByOne, productCount, isSaved }) => {
     const { isMobile, getThemeColors } = useTheme();
     const themeColors = getThemeColors();
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -134,7 +134,11 @@ const CartProduct = ({ product, removeAll, totalFn, editByOne, productCount }) =
             </Box>
             <Box style={bottomRowStyle}>
                 <a href="#" onClick={() => removeAll([product])}>Remove</a>
-                <a href="#" onClick={() => totalFn(product)}>saveForLater</a>
+                {isSaved ? (
+                    <a href="#" onClick={() => totalFn(product)}>Move to cart</a>
+                ) : (
+                    <a href="#" onClick={() => totalFn(product)}>saveForLater</a>
+                )}
                 {/* Add/Remove buttons */}
                 <Box sx={boxStyle}>
                     <Button onClick={() => editByOne(product, "remove")}>
