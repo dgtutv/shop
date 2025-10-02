@@ -65,7 +65,8 @@ const CartProduct = ({ product, removeAll, totalFn, editByOne, productCount, isS
     const infoStyleMobile = {
         ...infoStyle,
         width: "100%",
-        justifyContent: "flex-end"
+        justifyContent: "flex-end",
+        textAlign: "end"
     }
 
     const bottomRowStyle = {
@@ -119,7 +120,7 @@ const CartProduct = ({ product, removeAll, totalFn, editByOne, productCount, isS
                             </Box>
 
                             <Box>
-                                <Typography gutterBottom variant={"subtitle1"} component="div">
+                                <Typography gutterBottom variant={"subtitle1"} component="div" sx={{ textAlign: "start" }}>
                                     {product.title}
                                 </Typography>
                                 <Typography variant={"subtitle1"} sx={{ fontWeight: 'bold', mb: 1 }}>
