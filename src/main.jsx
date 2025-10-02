@@ -1,8 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import App from './App.jsx'
-import { createBrowserRouter, RouterProvider } from "react-router";
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import Shop from './pages/Shop.jsx'
 import CartPage from './pages/Cart.jsx'
 import Layout from './layouts/Layout.jsx';
@@ -16,7 +15,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Shop />,
+        element: <Navigate to="/shop" replace />
       },
       {
         path: "shop",
@@ -28,7 +27,7 @@ const router = createBrowserRouter([
       },
       {
         path: "*",
-        element: <Shop />
+        element: <Navigate to="/shop" replace />
       }
     ]
   },
