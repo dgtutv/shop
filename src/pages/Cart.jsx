@@ -2,7 +2,7 @@ import { useCart } from '../contexts/CartContext';
 import CartProduct from '../components/CartProduct';
 
 const CartPage = () => {
-    const { products, productCounts, loading, addToCart, removeFromCart, saveForLaterFn, moveBackToCartFn, removeAll, saveForLater } = useCart();
+    const { products, productCounts, loading, addToCart, removeFromCart, saveForLaterFn, moveBackToCartFn, removeAll, saveForLater, numItems, getNumSaved, getTotalCart } = useCart();
 
     const handleCartChange = (product, action) => {
         if (action === 'add') addToCart(product);
@@ -10,10 +10,24 @@ const CartPage = () => {
     };
 
     if (loading) return <p>Loading products...</p>;
-    //Improve sectioning
+
+    const headerStyling = {
+        margin: "8px",
+        fontSize: "2em",
+        display: "flex",
+        justifyContent: "center"
+    }
+
+    const sumStyling = {
+        ...headerStyling,
+        justifyContent: "flex-end",
+        fontSize: "1.5em",
+        fontWeight: "400"
+    }
+
     return (
-        <div>
-            <h1>Cart</h1>
+        <div style={{ margin: "24px 8px" }}>
+            <h1 style={headerStyling}>Cart ({(numItems - getNumSaved())})</h1>
             {products.filter(product => productCounts[product.id - 1] !== 0 && saveForLater[product.id - 1] === 0).map((product) => (
                 <CartProduct
                     key={product.id}
@@ -25,7 +39,9 @@ const CartPage = () => {
                     isSaved={false}
                 />
             ))}
-            <h2>Saved For Later</h2>
+            <h3 style={sumStyling}>Cart Total: ${getTotalCart()}</h3>
+            <br />
+            <h1 style={headerStyling}>Saved For Later ({getNumSaved()})</h1>
             {products.filter(product => productCounts[product.id - 1] !== 0 && saveForLater[product.id - 1] === 1).map((product) => (
                 <CartProduct
                     key={product.id}

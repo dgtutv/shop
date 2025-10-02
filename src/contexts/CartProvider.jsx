@@ -64,6 +64,26 @@ export const CartProvider = ({ children }) => {
         })
     }
 
+    function getNumSaved() {
+        let sum = 0;
+        for (let i = 0; i < saveForLater.length; i++) {
+            if (saveForLater[i] === 1) {
+                sum++;
+            }
+        }
+        return sum;
+    }
+
+    function getTotalCart() {
+        let sum = 0;
+        for (let i = 0; i < products.length; i++) {
+            if (saveForLater[i] === 0) {
+                sum += (products[i].price * productCounts[i]);
+            }
+        }
+        return sum;
+    }
+
     // ------ Asynchronous Functions ------- //
     // Load products
     useEffect(() => {
@@ -180,7 +200,9 @@ export const CartProvider = ({ children }) => {
         removeFromCart,
         saveForLaterFn,
         moveBackToCartFn,
-        removeAll
+        removeAll,
+        getNumSaved,
+        getTotalCart,
     }
 
     return (
