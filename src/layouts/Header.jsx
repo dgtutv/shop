@@ -7,8 +7,9 @@ import CloseIcon from "@mui/icons-material/Close";
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useCart } from '../contexts/CartContext.jsx';
 
+//Add icons
+
 const Header = () => {
-    const location = useLocation();
     const { isMobile, getThemeColors } = useTheme();
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const themeColors = getThemeColors();
@@ -47,13 +48,6 @@ const Header = () => {
                         sx={drawerStyle}
                     >
                         <NavLink
-                            to="/"
-                            className={({ isActive }) => isActive ? "activeLinkStyle" : "linkStyle"}
-                            onClick={toggleMobileMenu}
-                        >
-                            Home
-                        </NavLink>
-                        <NavLink
                             to="/shop"
                             className={({ isActive }) => isActive ? "activeLinkStyle" : "linkStyle"}
                             onClick={toggleMobileMenu}
@@ -86,13 +80,6 @@ const Header = () => {
                         Fake Store
                     </h1>
                     <nav>
-                        <NavLink
-                            to="/"
-                            className={({ isActive }) => isActive ? "activeLinkStyle" : "linkStyle"
-                            }
-                        >
-                            Home
-                        </NavLink>
                         <NavLink
                             to="/shop"
                             className={({ isActive }) => isActive ? "activeLinkStyle" : "linkStyle"
