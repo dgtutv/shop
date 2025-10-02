@@ -10,7 +10,7 @@ const CartPage = () => {
     };
 
     if (loading) return <p>Loading products...</p>;
-
+    //Improve sectioning
     return (
         <div>
             <h1>Cart</h1>
