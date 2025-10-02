@@ -7,11 +7,13 @@ import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useState } from "react";
 
 const CartProduct = ({ product, removeAll, totalFn, editByOne, productCount, isSaved }) => {
-    const { isMobile, getThemeColors } = useTheme();
+    const { isMobile, getThemeColors, underThreshold } = useTheme();
     const themeColors = getThemeColors();
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
     const toggleDropdownOpen = () => setDropdownOpen(prev => !prev);
+
+    //1100px media query
 
     // MUI spacing, 1 = 8px
     const baseCardStyle = {
@@ -24,16 +26,7 @@ const CartProduct = ({ product, removeAll, totalFn, editByOne, productCount, isS
         alignItems: "center",
         margin: 1,
         padding: 2,
-    };
-
-    const mobileStyle = {
-        ...baseCardStyle,
-        width: 140,
-    };
-
-    const desktopStyle = {
-        ...baseCardStyle,
-        width: 310,
+        width: "calc(100% - 2)"
     };
 
     const boxStyle = {
@@ -48,7 +41,7 @@ const CartProduct = ({ product, removeAll, totalFn, editByOne, productCount, isS
     const dropdownBarStyle = {
         display: "flex",
         flexDirection: "row",
-        justifyContent: "center",
+        justifyContent: "flex-start",
         alignItems: "center",
         '&:hover': {
             cursor: "pointer",
@@ -60,6 +53,7 @@ const CartProduct = ({ product, removeAll, totalFn, editByOne, productCount, isS
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
+        width: "100%",
     }
 
     const infoStyle = {
@@ -67,6 +61,7 @@ const CartProduct = ({ product, removeAll, totalFn, editByOne, productCount, isS
         flexDirection: "row",
         justifyContent: "flex-start",
         alignItems: "center",
+        width: "60%"
     }
 
     const bottomRowStyle = {
@@ -74,34 +69,39 @@ const CartProduct = ({ product, removeAll, totalFn, editByOne, productCount, isS
         flexDirection: "row",
         justifyContent: "flex-end",
         alignItems: "center",
+        width: "100%",
+        gap: "20px"
     }
 
-
     return (
-        <Card sx={isMobile ? mobileStyle : desktopStyle}>
+        <Card sx={underThreshold ? cardBelowThreshold : baseCardStyle}>
             <Box style={topRowStyle}>
                 <Box style={infoStyle}>
                     {/*Image */}
                     <Box
                         sx={{
-                            maxHeight: "60%",
-                            width: isMobile ? 120 : 200,
+                            maxWidth: "120px",
+                            width: "10vw",
+                            minWidth: "80px",
+                            minHeight: "80px",
                             display: "flex",
                             justifyContent: "center",
                             alignItems: "center",
                             overflow: "hidden",
+                            mr: "20px",
                         }}
                     >
                         <img
                             src={product.image}
                             alt={product.title}
                             style={{
-                                maxWidth: "100%",
-                                maxHeight: "100%",
-                                objectFit: "contain"
+                                width: "100%",
+                                height: "100%",
+                                objectFit: "contain",
                             }}
                         />
                     </Box>
+
                     <Box>
                         <Typography gutterBottom variant={isMobile ? "subtitle1" : "h5"} component="div">
                             {product.title}
