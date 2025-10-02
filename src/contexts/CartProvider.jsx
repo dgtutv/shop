@@ -55,6 +55,15 @@ export const CartProvider = ({ children }) => {
         });
     }
 
+    function removeAll(product) {
+        const index = product.id - 1;
+        setProductCounts(prevCounts => {
+            const newCounts = [...prevCounts];
+            newCounts[index] = 0;
+            return newCounts;
+        })
+    }
+
     // ------ Asynchronous Functions ------- //
     // Load products
     useEffect(() => {
@@ -170,6 +179,7 @@ export const CartProvider = ({ children }) => {
         removeFromCart,
         saveForLaterFn,
         moveBackToCartFn,
+        removeAll
     }
 
     return (
