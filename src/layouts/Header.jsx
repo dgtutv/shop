@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
-import { NavLink, useLocation } from 'react-router';
+import { useState } from 'react';
+import { NavLink } from 'react-router';
 import "./layout.css"
-import { Box, IconButton, Drawer } from "@mui/material";
+import { IconButton, Drawer } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import CloseIcon from "@mui/icons-material/Close";
 import { useTheme } from '../contexts/ThemeContext.jsx';
 import { useCart } from '../contexts/CartContext.jsx';
-
-//Add icons
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const Header = () => {
     const { isMobile, getThemeColors } = useTheme();
@@ -91,8 +89,13 @@ const Header = () => {
                             to="/cart"
                             className={({ isActive }) => isActive ? "activeLinkStyle" : "linkStyle"
                             }
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center"
+                            }}
                         >
-                            Cart ({numItems})
+                            {<ShoppingCartIcon />} ({numItems})
                         </NavLink>
                     </nav>
                 </header>
