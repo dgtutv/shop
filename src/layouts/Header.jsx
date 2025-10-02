@@ -69,16 +69,7 @@ const Header = () => {
                         </NavLink>
                     </Drawer>
                     <h1>
-                        {(() => {
-                            switch (location.pathname) {
-                                case "/shop":
-                                    return "Shop";
-                                case "/cart":
-                                    return "Cart";
-                                default:
-                                    return "Home";
-                            }
-                        })()}
+                        Fake Store
                     </h1>
                     <IconButton
                         sx={hamburgerMenuStyle}
@@ -92,16 +83,7 @@ const Header = () => {
             ) : (
                 <header>
                     <h1>
-                        {(() => {
-                            switch (location.pathname) {
-                                case "/shop":
-                                    return "Shop";
-                                case "/cart":
-                                    return "Cart";
-                                default:
-                                    return "Home";
-                            }
-                        })()}
+                        Fake Store
                     </h1>
                     <nav>
                         <NavLink
