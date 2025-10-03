@@ -15,10 +15,6 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Navigate to="/shop" replace />
-      },
-      {
-        path: "shop",
         element: <Shop />,
       },
       {
@@ -27,7 +23,7 @@ const router = createBrowserRouter([
       },
       {
         path: "*",
-        element: <Navigate to="/shop" replace />
+        element: <Navigate to="/" replace />,
       }
     ]
   },
