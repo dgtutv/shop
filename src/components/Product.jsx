@@ -84,7 +84,7 @@ const Product = ({ product, callbackFn, productCount }) => {
                     {product.title}
                 </Typography>
                 <Typography variant={isMobile ? "subtitle1" : "h6"} sx={{ fontWeight: 'bold', mb: 1 }}>
-                    ${product.price}
+                    ${product.price.toFixed(2)}
                 </Typography>
 
                 {/* Dropdown for description */}
